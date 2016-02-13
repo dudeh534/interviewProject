@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 
 import fighting.teamsixteen.unithon.model.AnswerVideo;
 import fighting.teamsixteen.unithon.model.Group;
@@ -24,13 +25,13 @@ public class DataBase extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create new Database
-        String query = "CREATE TABLE FOLDER(IDX INTEGER PRIMARY KEY, CREDATE DATE DEFAULT CURRENT_TIMESTAMP, GROUPNAME VARCHAR(255) NOT NULL, GROUPFIGHTING VARCHAR(255))";
+        String query = "CREATE TABLE FOLDER(IDX INTEGER PRIMARY KEY, CREDATE VARCHAR(20), GROUPNAME VARCHAR(255) NOT NULL, GROUPFIGHTING VARCHAR(255))";
         db.execSQL(query);
-        String query2 = "CREATE TABLE QUESTION(IDX INTEGER  PRIMARY KEY, CREDATE DATE DEFAULT CURRENT_TIMESTAMP, GROUPIDX INTEGER NOT NULL, QUESTIONSTR VARCHAR(255), VOICEPATH VARCHAR(255), CHECKPOINT BOOLEAN)";
+        String query2 = "CREATE TABLE QUESTION(IDX INTEGER  PRIMARY KEY, CREDATE VARCHAR(20), GROUPIDX INTEGER NOT NULL, QUESTIONSTR VARCHAR(255), VOICEPATH VARCHAR(255), CHECKPOINT BOOLEAN)";
         db.execSQL(query2);
-        String query3 = "CREATE TABLE ANSWER(IDX INTEGER PRIMARY KEY, CREDATE DATE DEFAULT CURRENT_TIMESTAMP, QUESTIONIDX INTEGER NOT NULL, FILEPATH VARCHAR(255) NOT NULL,CREDIT INTEGER, SUMNAILPATH VARCHAR(255))";
+        String query3 = "CREATE TABLE ANSWER(IDX INTEGER PRIMARY KEY, CREDATE VARCHAR(20), QUESTIONIDX INTEGER NOT NULL, FILEPATH VARCHAR(255) NOT NULL,CREDIT INTEGER, SUMNAILPATH VARCHAR(255))";
         db.execSQL(query3);
-        String query4 = "CREATE TABLE MEMO(IDX INTEGER PRIMARY KEY, CREDATE DATE DEFAULT CURRENT_TIMESTAMP, ANSWERIDX INTEGER NOT NULL, MEMOTIME VARCHAR(30), MEMOSTRING VARCHAR(255))";
+        String query4 = "CREATE TABLE MEMO(IDX INTEGER PRIMARY KEY, CREDATE VARCHAR(20), ANSWERIDX INTEGER NOT NULL, MEMOTIME VARCHAR(30), MEMOSTRING VARCHAR(255))";
         db.execSQL(query4);
     }
 
@@ -53,7 +54,11 @@ public class DataBase extends SQLiteOpenHelper{
     }
 
     public void createNewFolder(String groupName, String fighting) {
-        String query = "INSERT INTO FOLDER(GROUPNAME, GROUPFIGHTING) VALUES(\"" + groupName + "\", \"" + fighting + "\")";
+        long now = System.currentTimeMillis();
+        java.util.Date date = new java.util.Date(now);
+        SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+        final String strCurDate = CurDateFormat.format(date);
+        String query = "INSERT INTO FOLDER(GROUPNAME, GROUPFIGHTING, CREDATE) VALUES(\"" + groupName + "\", \"" + fighting + "\", \"" + strCurDate + "\")";
         insert(query);
     }
 
@@ -67,7 +72,7 @@ public class DataBase extends SQLiteOpenHelper{
         int i = 0;
         while(cursor.moveToNext()){
             int idx = cursor.getInt(0);
-            Date date = new Date(cursor.getLong(1));
+            String date = cursor.getString(1);
             String groupname = cursor.getString(2);
             String groupFighting = cursor.getString(3);
             reGrup[i] = new Group();
@@ -78,7 +83,11 @@ public class DataBase extends SQLiteOpenHelper{
     }
 
     public void createNewQuestion(int groupIdx, String questionStr, String voicePath){
-        String query = "INSERT INTO QUESTION(GROUPIDX, QUESTIONSTR, VOICEPATH) VALUES("+groupIdx + ", \""+ questionStr + "\", \"" + voicePath +"\")";
+        long now = System.currentTimeMillis();
+        java.util.Date date = new java.util.Date(now);
+        SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+        final String strCurDate = CurDateFormat.format(date);
+        String query = "INSERT INTO QUESTION(GROUPIDX, QUESTIONSTR, VOICEPATH, CREDATE) VALUES("+groupIdx + ", \""+ questionStr + "\", \"" + voicePath +"\", \"" + strCurDate + "\")";
         insert(query);
 
     }
@@ -89,10 +98,13 @@ public class DataBase extends SQLiteOpenHelper{
         String query = "SELECT *, (SELECT COUNT(*) FROM ANSWER WHERE ANSWER.QUESTIONIDX = QUESTION.IDX) AS CNT FROM QUESTION WHERE GROUPIDX= " + groupIdx + " ORDER BY CREDATE DESC";
         Cursor cursor = db.rawQuery(query,null);
         reQ = new Question[cursor.getColumnCount()];
+        if(cursor.getColumnCount() == 0){
+            return null;
+        }
         int i = 0;
         while(cursor.moveToNext()){
             int idx = cursor.getInt(0);
-            Date creDate = new Date(cursor.getLong(1));
+            String creDate = cursor.getString(1);
             int groupidx = cursor.getInt(2);
             String question = cursor.getString(3);
             String voicePath = cursor.getString(4);
@@ -106,7 +118,11 @@ public class DataBase extends SQLiteOpenHelper{
     }
 
     public void createNewAnswerVideo(int questionIdx, String filePath, int credit, String sumnailPath ){
-        String query = "INSERT INTO ANSWER(QUESTIONIDX, FILEPATH, CREDIT, SUMNAILPATH) VALUES(" + questionIdx + ", \"" + filePath + "\", "+credit + ", \"" + sumnailPath + "\")";
+        long now = System.currentTimeMillis();
+        java.util.Date date = new java.util.Date(now);
+        SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+        final String strCurDate = CurDateFormat.format(date);
+        String query = "INSERT INTO ANSWER(QUESTIONIDX, FILEPATH, CREDIT, SUMNAILPATH, CREDATE) VALUES(" + questionIdx + ", \"" + filePath + "\", "+credit + ", \"" + sumnailPath + "\", \"" + strCurDate + "\")";
         insert(query);
     }
 
@@ -119,7 +135,7 @@ public class DataBase extends SQLiteOpenHelper{
         int i = 0;
         while(cursor.moveToNext()){
             int idx = cursor.getInt(0);
-            Date creDate = new Date(cursor.getLong(1));
+            String creDate = cursor.getString(1);
             int questionidx = cursor.getInt(2);
             String filePath = cursor.getString(3);
             int credit = cursor.getInt(4);
@@ -132,7 +148,11 @@ public class DataBase extends SQLiteOpenHelper{
     }
 
     public void createNewMemo(int answerIdx, String memoTime, String memoString){
-        String query = "INSERT INTO MEMO(ANSWERIDX, MEMOTIME, MEMOSTRING) VALUES("+answerIdx + ", \"" + memoTime + "\", \"" + memoString +"\")";
+        long now = System.currentTimeMillis();
+        java.util.Date date = new java.util.Date(now);
+        SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+        final String strCurDate = CurDateFormat.format(date);
+        String query = "INSERT INTO MEMO(ANSWERIDX, MEMOTIME, MEMOSTRING, CREDATE) VALUES("+answerIdx + ", \"" + memoTime + "\", \"" + memoString +"\", \"" + strCurDate + "\")";
         insert(query);
     }
 
@@ -146,7 +166,7 @@ public class DataBase extends SQLiteOpenHelper{
         int i = 0;
         while(cursor.moveToNext()){
             int idx = cursor.getInt(0);
-            Date creDate = new Date(cursor.getLong(1));
+            String creDate = cursor.getString(1);
             int answeridx = cursor.getInt(2);
             String memoTime = cursor.getString(3);
             String memoString = cursor.getString(4);
