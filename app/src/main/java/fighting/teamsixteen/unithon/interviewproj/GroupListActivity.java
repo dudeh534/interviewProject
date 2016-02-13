@@ -33,11 +33,11 @@ public class GroupListActivity extends AppCompatActivity {
         fab = (FrameLayout)findViewById(R.id.fab);
         List<Recycler_item> items=new ArrayList<>();
         Recycler_item[] item=new Recycler_item[5];
-        item[0]=new Recycler_item(R.drawable.button_floating,"인턴면접");
-        item[1]=new Recycler_item(R.drawable.button_floating,"동아리면접");
-        item[2]=new Recycler_item(R.drawable.button_floating,"개인면접");
-        item[3]=new Recycler_item(R.drawable.button_floating,"유니톤면접");
-        item[4]=new Recycler_item(R.drawable.button_floating,"공채면접");
+        item[0]=new Recycler_item(R.drawable.btn_delete,"인턴면접");
+        item[1]=new Recycler_item(R.drawable.btn_delete,"동아리면접");
+        item[2]=new Recycler_item(R.drawable.btn_delete,"개인면접");
+        item[3]=new Recycler_item(R.drawable.btn_delete,"유니톤면접");
+        item[4]=new Recycler_item(R.drawable.btn_delete,"공채면접");
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
