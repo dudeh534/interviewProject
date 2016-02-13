@@ -32,7 +32,7 @@
         <Button
             android:layout_width="28dp"
             android:layout_height="15dp"
-            android:id="@+id/button"
+            android:id="@+id/button_success"
             android:background="@drawable/btn_succes"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
@@ -72,7 +72,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText3"
+                android:id="@+id/editText_question"
                 android:layout_gravity="center"
                 android:hint="질문을 입력하세요"
                 android:textColorHint="#c9c9c9"
