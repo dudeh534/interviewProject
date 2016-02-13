@@ -1,6 +1,7 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -37,9 +38,6 @@ public class GroupListActivity extends AppCompatActivity {
         item[2]=new Recycler_item(R.drawable.button_floating,"개인면접");
         item[3]=new Recycler_item(R.drawable.button_floating,"유니톤면접");
         item[4]=new Recycler_item(R.drawable.button_floating,"공채면접");
-
-
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +93,19 @@ public class GroupListActivity extends AppCompatActivity {
         });
         for(int i=0;i<5;i++) items.add(item[i]);
 
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(GroupListActivity.this, QuestionListActivity.class);
+                //intent.putExtra("")
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        }));
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(new RecyclerAdapter(getApplicationContext(), items, R.layout.activity_main));
 
