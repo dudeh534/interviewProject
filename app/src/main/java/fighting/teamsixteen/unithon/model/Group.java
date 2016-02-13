@@ -11,17 +11,17 @@ public class Group {
         setGroupName(groupName);
     }
     private int idx;
-    private Date creDate;
+    private String creDate;
     private String groupName;
     private String groupFighting;
 
     public int getIdx(){ return idx;}
-    public Date getCredate(){ return creDate;}
+    public String getCredate(){ return creDate;}
     public String getGroupName(){ return groupName; }
     public String getGroupFighting(){return groupFighting;}
 
     private void setIdx(int idx){ this.idx = idx;}
-    private void setCreDate(Date creDate){this.creDate = creDate;}
+    private void setCreDate(String creDate){this.creDate = creDate;}
     private void setGroupName(String groupName){this.groupName = groupName;}
     private void setGroupFighting(String groupFighting) {this.groupFighting = groupFighting;}
 
@@ -33,7 +33,7 @@ public class Group {
         setIdx(idx);
         setGroupName(groupName);
     }
-    public void setData(int idx, String groupName, Date date, String fighting){
+    public void setData(int idx, String groupName, String date, String fighting){
         setIdx(idx);
         setGroupName(groupName);
         setCreDate(date);
