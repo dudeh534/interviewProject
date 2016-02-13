@@ -12,6 +12,7 @@
         android:layout_margin="5dp"
         card_view:cardCornerRadius="3dp"
         >
+        <!-- elevation : api21부터 cardview의 그림자 두께 조절-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
