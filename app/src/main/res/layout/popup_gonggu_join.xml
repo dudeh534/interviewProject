@@ -7,19 +7,47 @@
     android:gravity="center"
     android:padding="22dp"
     android:background="#ffffff">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="☆ 인터뷰 폴더 제목을 입력해주세요."
-        android:textSize="15dp"
-        android:textColor="#222222"/>
 
-    <EditText
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="☆ 인터뷰 폴더 제목을 입력해주세요."
+            android:textSize="15dp"
+            android:textColor="#222222"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText" />
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="☆ 각오를 입력하세요!."
+            android:textSize="15dp"
+            android:textColor="#222222" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2"/>
+    </LinearLayout>
 
     <ImageButton
         android:layout_width="130dp"

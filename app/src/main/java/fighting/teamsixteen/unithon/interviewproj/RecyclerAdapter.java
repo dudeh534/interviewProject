@@ -1,6 +1,7 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -40,22 +41,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         final Recycler_item item = items.get(position);
         Drawable drawable = context.getResources().getDrawable(item.getImage());
         Drawable drawable1 = context.getResources().getDrawable(
-                R.drawable.img_full_background);
-        holder.image.setBackground(drawable);
+                R.drawable.background);
         holder.title.setText(item.getTitle());
         holder.time.setText(item.getTime());
         holder.goal.setText(item.getGoal());
         if(position == 0){
-            holder.linearLayout.setForeground(drawable1);
+            holder.title.setText("");
+            holder.time.setText("");
+            holder.goal.setText("");
+            holder.linearLayout.setBackground(drawable1);
+            holder.image.setBackgroundColor(Color.parseColor("#ffffff"));
+            holder.two.setBackgroundColor(Color.parseColor("#ffffff"));
+            holder.three.setBackgroundColor(Color.parseColor("#ffffff"));
+            holder.linearLayout2.setBackgroundColor(Color.parseColor("#ffffff"));
         }
-
-        holder.cardview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, item.getTitle(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
 
     @Override
@@ -69,7 +68,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         CardView cardview;
         TextView time;
         TextView goal;
-        LinearLayout linearLayout;
+        LinearLayout linearLayout, linearLayout2;
+        ImageView one, two, three;
 
 
         public ViewHolder(View itemView) {
@@ -80,6 +80,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             goal = (TextView) itemView.findViewById(R.id.textView);
             time = (TextView) itemView.findViewById(R.id.textView2);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linear);
+            two = (ImageView) itemView.findViewById(R.id.imageView2);
+            three = (ImageView) itemView.findViewById(R.id.imageView3);
+            linearLayout2 = (LinearLayout) itemView.findViewById(R.id.linear2);
         }
     }
 }
