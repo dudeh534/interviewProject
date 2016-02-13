@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ public class QuestionListActivity extends AppCompatActivity {
             for (int i = 0; i < questions.length; i++) {
                 String formatStr = "해당 질문에 대한 답변이 " + questions[i].getAnswerCount() + "개 있습니다.";
                 item[i] = new Recycler_Item_question(questions[i].getQuestion(), formatStr, "" + (i + 1));
-
             }
             for (int i = 0; i < questions.length; i++) items.add(item[i]);
             recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
@@ -55,6 +55,14 @@ public class QuestionListActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+
+        Button back = (Button) findViewById(R.id.information_btn_toggle122);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

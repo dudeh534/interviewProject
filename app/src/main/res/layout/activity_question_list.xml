@@ -13,14 +13,29 @@
         android:orientation="horizontal"
         android:id="@+id/actionbar_cus">
 
-        <ImageView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView4"
-            android:background="@drawable/btn_all_select"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/information_btn_toggle122"
+                android:layout_width="28dp"
+                android:layout_height="15dp"
+                android:visibility="visible"
+                android:background="@drawable/btn_back"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4"
+                android:background="@drawable/btn_all_select"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="30dp"
+                android:paddingLeft="5dp" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/information_btn_toggle"
@@ -29,26 +44,24 @@
             android:visibility="invisible" />
 
 
-
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:background="#e1e1e1"
         android:orientation="horizontal"
-        android:layout_below="@+id/actionbar_cus"
-        android:layout_marginLeft="5dp">
+        android:layout_below="@+id/actionbar_cus">
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="총 4개의 질문이 있습니다" />
+            android:text="총 4개의 질문이 있습니다"
+            android:layout_marginLeft="10dp"
+            android:paddingLeft="5dp" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
