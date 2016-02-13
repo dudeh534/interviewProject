@@ -99,6 +99,9 @@ public class GroupListActivity extends AppCompatActivity {
                             dialog.dismiss();
                             item[n] = new Recycler_item(R.drawable.btn_delete, et.getText().toString(), strCurDate, et1.getText().toString());
                             db.createNewFolder(et.getText().toString(), et1.getText().toString());
+                            // reset group List
+                            groupList = null;
+                            groupList = db.getGroupList();
                             n += 1;
                             for (int i = n-1; i < n; i++) items.add(item[i]);
                             recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
