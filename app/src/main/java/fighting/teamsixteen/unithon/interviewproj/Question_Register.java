@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import java.awt.Button;
-import java.lang.Override;
+import fighting.teamsixteen.unithon.db.DataBase;
 
 /**
  * Created by ChaeYoungDo on 2016-02-14.
