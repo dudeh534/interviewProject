@@ -47,7 +47,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 Toast.makeText(context, item.getTitle(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, QuestionListActivity.class);
                 intent.putExtra("title", item.getTitle());
-                
+
             }
         });
     }
