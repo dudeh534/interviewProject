@@ -42,12 +42,21 @@
             android:text="총 %개의 답변이 있습니다."
             android:textColor="#555555" />
 
-        <fighting.teamsixteen.unithon.util.HorizontalListView
-            android:id="@+id/videoview_horizontallist"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tv_past_video_number"
-            android:background="#eeeeee" />
+            android:layout_below="@id/tv_past_video_number">
+
+            <fighting.teamsixteen.unithon.util.HorizontalListView
+                android:id="@+id/videoview_horizontallist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#eeeeee" />
+            <ListView
+                android:id="@+id/memo_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
 
 
     </RelativeLayout>

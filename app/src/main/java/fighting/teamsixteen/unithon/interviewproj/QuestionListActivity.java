@@ -53,6 +53,18 @@ public class QuestionListActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         }
         recyclerView.setAdapter(new RecyclerAdapter_question(getApplicationContext(), items, R.layout.activity_question_list));
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+//                Intent i=new Intent(QuestionListActivity.this,Vid)
+//                questions[position].getIdx()
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        }));
         fab = (FrameLayout) findViewById(R.id.fab1);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

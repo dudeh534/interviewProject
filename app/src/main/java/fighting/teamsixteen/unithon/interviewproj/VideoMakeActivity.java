@@ -29,6 +29,8 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
     private Camera mCamera;
     MediaRecorder recorder;
 
+    boolean isrecording = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,48 +63,44 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
 //                setCameraPreview(mTexture, currentCameraId);
             }
         });
-        ImageView imgview = (ImageView) findViewById(R.id.btn_start);
-        imgview.setOnClickListener(new View.OnClickListener() {
+        final ImageView record_btn = (ImageView) findViewById(R.id.record_btn);
+        record_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Log.e("CAM TEST", "REC START!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-                if (mTexture == null) {
-                    Log.e("CAM TEST", "View Err!!!!!!!!!!!!!!!");
-                }
-                beginRecording(mTexture);
-
-            }
-        });
-        ImageView recStop = (ImageView) findViewById(R.id.btn_stop);
-        recStop.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                // 레코더 객체가 존재할 경우 이를 스톱시킨다
-
-                if (recorder != null) {
-                    Log.e("CAM TEST", "CAMERA STOP!!!!!");
-                    recorder.stop();
-                    recorder.release();
-                    recorder = null;
-                }
-                // 프리뷰가 없을 경우 다시 가동 시킨다
-                if (mCamera == null) {
-                    Log.e("CAM TEST", "Preview Restart!!!!!");
-                    // 프리뷰 다시 설정{
+                if (isrecording) {
+                    if (mTexture == null) {
+                        Log.e("CAM TEST", "View Err!!!!!!!!!!!!!!!");
+                    }
+                    beginRecording(mTexture);
+                    isrecording = true;
+                    record_btn.setBackgroundResource(R.drawable.question_record_ing);
+                } else {
+                    if (recorder != null) {
+                        Log.e("CAM TEST", "CAMERA STOP!!!!!");
+                        recorder.stop();
+                        recorder.release();
+                        recorder = null;
+                    }
+                    // 프리뷰가 없을 경우 다시 가동 시킨다
+                    if (mCamera == null) {
+                        Log.e("CAM TEST", "Preview Restart!!!!!");
+                        // 프리뷰 다시 설정{
 //                mCamera.stopPreview();
 //                mCamera.release();
-                    setCameraPreview(mTexture, currentCameraId);
-                    // 프리뷰 재시작
+                        setCameraPreview(mTexture, currentCameraId);
+                        // 프리뷰 재시작
+                        isrecording = false;
+                        record_btn.setBackgroundResource(R.drawable.question_record_start);
 
 //                    mCamera.startPreview();
+                    }
                 }
             }
         });
+
     }
 
     private void startCamera(int facing) {

@@ -36,10 +36,39 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/ic_launcher" />
+            <ImageView
+                android:id="@+id/record_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/question_record_start"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="12dp"
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
     </FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/tv_past_video_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#cccccc"
+            android:padding="4dp"
+            android:text="총 %개의 답변이 있습니다."
+            android:textColor="#555555" />
+
+            <fighting.teamsixteen.unithon.util.HorizontalListView
+                android:id="@+id/videoview_horizontallist"
+                android:layout_below="@id/tv_past_video_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#eeeeee" />
+
+    </RelativeLayout>
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -64,6 +93,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="녹화확인" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>
