@@ -12,18 +12,31 @@
         android:id="@+id/actionbar_cus">
 
         <Button
-            android:id="@+id/information_btn_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible" />
+            android:id="@+id/information_btn_toggle12"
+            android:layout_width="28dp"
+            android:layout_height="15dp"
+            android:visibility="visible"
+            android:background="@drawable/btn_back"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_weight="0.01"
             android:gravity="center"
             android:textSize="20dp"
             android:textStyle="bold" />
+
+        <Button
+            android:layout_width="28dp"
+            android:layout_height="15dp"
+            android:id="@+id/button"
+            android:background="@drawable/btn_succes"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="8dp" />
 
 
     </LinearLayout>
@@ -61,7 +74,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/editText3"
                 android:layout_gravity="center"
-                android:hint="질문을 입력하세요" />
+                android:hint="질문을 입력하세요"
+                android:textColorHint="#c9c9c9"
+                android:textColor="#000000" />
         </FrameLayout>
 
         <FrameLayout

@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -31,12 +32,20 @@ public class QuestionListActivity extends AppCompatActivity {
         for (int i = 0; i < 3 ; i++) items.add(item[i]);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         recyclerView.setAdapter(new RecyclerAdapter_question(getApplicationContext(), items, R.layout.activity_question_list));
-        fab = (FrameLayout) findViewById(R.id.fab);
+        fab = (FrameLayout) findViewById(R.id.fab1);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuestionListActivity.this, Question_Register.class);
                 startActivity(intent);
+            }
+        });
+
+        Button back = (Button) findViewById(R.id.information_btn_toggle122);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
