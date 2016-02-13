@@ -44,8 +44,7 @@ public class GroupListActivity extends AppCompatActivity {
         final Recycler_item[] item = new Recycler_item[20];
         item[0] = new Recycler_item(R.drawable.btn_delete, "인턴면접","","");
         for(int i = 0 ; i < groupList.length; i++){
-            String creDate = CurDateFormat.format(groupList[i].getCredate());
-            item[i+1] = new Recycler_item(R.drawable.btn_delete, groupList[i].getGroupName(),creDate,groupList[i].getGroupFighting());
+            item[i+1] = new Recycler_item(R.drawable.btn_delete, groupList[i].getGroupName(),groupList[i].getCredate(),groupList[i].getGroupFighting());
 
         }
 
