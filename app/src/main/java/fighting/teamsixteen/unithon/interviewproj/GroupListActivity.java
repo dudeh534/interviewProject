@@ -110,7 +110,7 @@ public class GroupListActivity extends AppCompatActivity {
 
                 }else {
                     Intent intent = new Intent(GroupListActivity.this, QuestionListActivity.class);
-                    intent.putExtra("GroupIdx",groupList[position-1].getIdx());
+                    intent.putExtra("GroupIdx", groupList[position - 1].getIdx()+"");
                     startActivity(intent);
                 }
             }

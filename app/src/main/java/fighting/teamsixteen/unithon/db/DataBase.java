@@ -98,6 +98,9 @@ public class DataBase extends SQLiteOpenHelper{
         String query = "SELECT *, (SELECT COUNT(*) FROM ANSWER WHERE ANSWER.QUESTIONIDX = QUESTION.IDX) AS CNT FROM QUESTION WHERE GROUPIDX= " + groupIdx + " ORDER BY CREDATE DESC";
         Cursor cursor = db.rawQuery(query,null);
         reQ = new Question[cursor.getColumnCount()];
+        if(cursor.getColumnCount() == 0){
+            return null;
+        }
         int i = 0;
         while(cursor.moveToNext()){
             int idx = cursor.getInt(0);
