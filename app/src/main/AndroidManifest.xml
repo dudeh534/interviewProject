@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fighting.teamsixteen.unithon.interviewproj">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +30,7 @@
         <activity
             android:name=".QuestionListActivity"
             android:label="@string/title_activity_question_list"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".VideoListActivity"
             android:label="@string/title_activity_video_list"
