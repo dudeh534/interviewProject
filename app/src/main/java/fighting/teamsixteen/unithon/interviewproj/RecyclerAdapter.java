@@ -1,6 +1,7 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +45,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, QuestionListActivity.class);
+                intent.putExtra("title", item.getTitle());
+                
             }
         });
     }

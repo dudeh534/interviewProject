@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +77,9 @@ public class GroupListActivity extends AppCompatActivity {
                         if(!s.toString().isEmpty()){
                             check.getBackground().setAlpha(200);
                             check.setEnabled(true);
+                        }else{
+                            check.getBackground().setAlpha(51);
+                            check.setEnabled(false);
                         }
                     }
                 });
@@ -85,11 +87,7 @@ public class GroupListActivity extends AppCompatActivity {
                 check.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(et.getText().toString().isEmpty()){
-                            Toast.makeText(GroupListActivity.this, "폴더 제목을 입력해주세요", Toast.LENGTH_SHORT).show();
-                        }else {
                             dialog.dismiss();
-                        }
                     }
                 });
 

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="15dp"
-        android:text="인터뷰 폴더 제목을 입력해주세요."
+        android:text="☆ 인터뷰 폴더 제목을 입력해주세요."
         android:textSize="15dp"
         android:textColor="#222222"/>
 
