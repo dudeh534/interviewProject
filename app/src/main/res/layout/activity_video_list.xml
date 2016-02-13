@@ -7,21 +7,33 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="fighting.teamsixteen.unithon.interviewproj.MainActivity">
+    tools:context="fighting.teamsixteen.unithon.interviewproj.VideoListActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello Main Activity!" />
+        android:text="Hello Video List Activity!" />
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go Group List"
-        android:id="@+id/btn_go_grouplist"
+        android:text="Go Video Make"
+        android:id="@+id/btn_go_videomake"
         android:textSize="20dp"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="124dp" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go Video View Activity"
+        android:id="@+id/btn_go_videoview"
+        android:textSize="20dp"
+        android:layout_marginTop="72dp"
+        android:layout_below="@+id/btn_go_videomake"
+        android:layout_alignLeft="@+id/btn_go_videomake"
+        android:layout_alignStart="@+id/btn_go_videomake" />
 </RelativeLayout>
