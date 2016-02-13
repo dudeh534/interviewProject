@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import fighting.teamsixteen.unithon.db.DataBase;
 
@@ -41,12 +42,16 @@ public class Question_Register extends AppCompatActivity {
 
             }
         });
-
+        final TextView questionTV = (TextView)findViewById(R.id.editText_question);
         Button successButton=(Button)findViewById(R.id.button_success);
         successButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                db.createNewQuestion(nowQuestionIdx, "Questionadifoajdsflkadsjf", "Pathakldfjakd;lfja;kdsf");
+                db.createNewQuestion(nowQuestionIdx, questionTV.getText().toString(), "Path/path.p");
+                Intent intent2 = new Intent(Question_Register.this, QuestionListActivity.class);
+                intent2.putExtra("GroupIdx", "" + nowQuestionIdx);
+                startActivity(intent2);
+                finish();
             }
         });
     }

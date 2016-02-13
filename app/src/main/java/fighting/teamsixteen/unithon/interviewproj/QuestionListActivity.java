@@ -20,7 +20,7 @@ public class QuestionListActivity extends AppCompatActivity {
     private FrameLayout fab;
     private int n = 3;
     private int nowQuestionIdx;         // save now question idx
-    private Question[] questions = null;
+    private Question[] questions;
     private DataBase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +39,17 @@ public class QuestionListActivity extends AppCompatActivity {
         final List<Recycler_Item_question> items = new ArrayList<>();
         final Recycler_Item_question[] item = new Recycler_Item_question[20];
         if(questions[0] != null) {
-            for (int i = 0; i < questions.length; i++) {
-                String formatStr = "해당 질문에 대한 답변이 " + questions[i].getAnswerCount() + "개 있습니다.";
-                item[i] = new Recycler_Item_question(questions[i].getQuestion(), formatStr, "" + (i + 1));
+            int arrSize = 0;
+            for (int i = 0; i < 20; i++) {
+                if(questions[i] == null){
+                    break;
+                }else {
+                    String formatStr = "해당 질문에 대한 답변이 " + questions[i].getAnswerCount() + "개 있습니다.";
+                    item[i] = new Recycler_Item_question(questions[i].getQuestion(), formatStr, "" + (i + 1));
+                    arrSize++;
+                }
             }
-            for (int i = 0; i < questions.length; i++) items.add(item[i]);
+            for (int i = 0; i < arrSize; i++) items.add(item[i]);
             recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         }
         recyclerView.setAdapter(new RecyclerAdapter_question(getApplicationContext(), items, R.layout.activity_question_list));
@@ -54,6 +60,7 @@ public class QuestionListActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(QuestionListActivity.this, Question_Register.class);
                 intent2.putExtra("GroupIdx", ""+nowQuestionIdx);
                 startActivity(intent2);
+                finish();
             }
         });
 
