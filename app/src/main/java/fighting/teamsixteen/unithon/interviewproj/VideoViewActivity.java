@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -31,8 +32,10 @@ HorizontalListView videoview_horizontallist;
         mediaController = new MediaController(this);
 
         videoview_horizontallist=(HorizontalListView)findViewById(R.id.videoview_horizontallist);
+        ThumbnailMaker thumbnailMaker=new ThumbnailMaker();
 
-//        videoview_horizontallist.setAdapter();
+        videoview_horizontallist.setAdapter(thumbnailMaker.getVideoAdapter(VideoViewActivity.this));
+
         videoview = (VideoView) findViewById(R.id.videoview);
         btn_addmemo = (ImageView) findViewById(R.id.btn_addmemo);
         btn_addmemo.setOnClickListener(new View.OnClickListener() {
@@ -67,9 +70,11 @@ public class VideoListAdapter extends BaseAdapter{
 
     Context mContext;
 
+    private LayoutInflater inflater = null;
 
     public VideoListAdapter(Context mContext){
         this.mContext=mContext;
+//        inflater
 
     }
     @Override

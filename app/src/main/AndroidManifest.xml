@@ -48,6 +48,8 @@
 
         <activity android:name=".Question_Register"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".RecordActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
 </manifest>
