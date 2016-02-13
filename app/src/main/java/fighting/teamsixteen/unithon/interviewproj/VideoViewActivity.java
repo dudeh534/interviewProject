@@ -1,13 +1,18 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import fighting.teamsixteen.unithon.util.HorizontalListView;
 
 public class VideoViewActivity extends AppCompatActivity {
 
@@ -17,7 +22,7 @@ public class VideoViewActivity extends AppCompatActivity {
 
 
     MediaController mediaController;
-
+HorizontalListView videoview_horizontallist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +30,10 @@ public class VideoViewActivity extends AppCompatActivity {
 
         mediaController = new MediaController(this);
 
+        videoview_horizontallist=(HorizontalListView)findViewById(R.id.videoview_horizontallist);
+
+//        videoview_horizontallist.setAdapter();
         videoview = (VideoView) findViewById(R.id.videoview);
-        testTv = (TextView) findViewById(R.id.testTv);
         btn_addmemo = (ImageView) findViewById(R.id.btn_addmemo);
         btn_addmemo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,4 +62,35 @@ public class VideoViewActivity extends AppCompatActivity {
         });
     }
 
+
+public class VideoListAdapter extends BaseAdapter{
+
+    Context mContext;
+
+
+    public VideoListAdapter(Context mContext){
+        this.mContext=mContext;
+
+    }
+    @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        return null;
+    }
+}
 }

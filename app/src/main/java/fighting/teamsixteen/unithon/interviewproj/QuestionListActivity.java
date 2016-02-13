@@ -31,7 +31,7 @@ public class QuestionListActivity extends AppCompatActivity {
         for (int i = 0; i < 3 ; i++) items.add(item[i]);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         recyclerView.setAdapter(new RecyclerAdapter_question(getApplicationContext(), items, R.layout.activity_question_list));
-        fab = (FrameLayout) findViewById(R.id.fab1);
+        fab = (FrameLayout) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
