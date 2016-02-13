@@ -9,7 +9,7 @@
         android:id="@+id/cardView"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         card_view:cardCornerRadius="3dp"
         >
         <!-- elevation : api21부터 cardview의 그림자 두께 조절-->
