@@ -52,7 +52,6 @@ public class GroupListActivity extends AppCompatActivity {
 
                     //Dialog의 바깥쪽을 터치했을 때 Dialog를 없앨지 설정
                     dialog.setCanceledOnTouchOutside(false);//없어지지 않도록 설정
-
                     //Dialog 보이기
                     dialog.show();
                     final EditText et = (EditText) dialog.findViewById(R.id.editText);
@@ -97,7 +96,6 @@ public class GroupListActivity extends AppCompatActivity {
 
                 }else {
                     Intent intent = new Intent(GroupListActivity.this, QuestionListActivity.class);
-                    //intent.putExtra("")
                     startActivity(intent);
                 }
             }
