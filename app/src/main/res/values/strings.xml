@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InterviewProj</string>
+    <string name="app_name">SELFInterview</string>
     <string name="title_activity_group_list">GroupListActivity</string>
     <string name="title_activity_question_list">QuestionListActivity</string>
     <string name="title_activity_video_list">VideoListActivity</string>

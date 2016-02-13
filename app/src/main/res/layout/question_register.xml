@@ -73,8 +73,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/editText3"
-                android:textColor="#666666"
-                android:textColorHint="#999999"
                 android:layout_gravity="center"
                 android:hint="질문을 입력하세요"
                 android:textColorHint="#c9c9c9"
