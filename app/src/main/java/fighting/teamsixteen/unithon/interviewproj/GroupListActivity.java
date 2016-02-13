@@ -21,7 +21,7 @@ import java.util.List;
 
 import fighting.teamsixteen.unithon.db.DataBase;
 import fighting.teamsixteen.unithon.model.Group;
-
+//날짜
 public class GroupListActivity extends AppCompatActivity {
     private int n = 2;
     private DataBase db;
@@ -125,6 +125,7 @@ public class GroupListActivity extends AppCompatActivity {
 
         for (int i = 0; i < groupList.length+1; i++) items.add(item[i]);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setPadding(3,3,0,0);
         recyclerView.setAdapter(new RecyclerAdapter(getApplicationContext(), items, R.layout.activity_main));
 
     }

@@ -5,35 +5,30 @@
     android:layout_height="match_parent"
     android:background="#ededed"
     tools:context="fighting.teamsixteen.unithon.interviewproj.QuestionListActivity">
-
-
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="#ffffff"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_question_list"
+        android:padding="1dp"
+        android:orientation="horizontal"
+        android:id="@+id/actionbar_cus">
 
         <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/question_checkbox_" />
+            android:background="@drawable/btn_all_select"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8dp" />
 
-        <TextView
-            android:id="@+id/textView3"
+        <Button
+            android:id="@+id/information_btn_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="16dp"
-            android:text="New Text" />
+            android:visibility="invisible" />
+
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -42,9 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout"
         android:background="#e1e1e1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_below="@+id/actionbar_cus">
 
         <TextView
             android:id="@+id/textView4"
@@ -64,7 +59,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:background="@drawable/questionlist_upload"
-        android:id="@+id/fab"
+        android:id="@+id/fab1"
         android:onClick="onClick"
         android:layout_alignWithParentIfMissing="false"
         android:layout_alignParentBottom="true"
