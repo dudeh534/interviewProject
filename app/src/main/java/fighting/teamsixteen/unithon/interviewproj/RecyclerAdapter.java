@@ -1,7 +1,6 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,14 +39,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Recycler_item item = items.get(position);
         Drawable drawable = context.getResources().getDrawable(item.getImage());
+        Drawable drawable1 = context.getResources().getDrawable(
+                R.drawable.img_full_background);
         holder.image.setBackground(drawable);
         holder.title.setText(item.getTitle());
+        holder.time.setText(item.getTime());
+        holder.goal.setText(item.getGoal());
+        if(position == 0){
+            holder.linearLayout.setForeground(drawable1);
+        }
+
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, item.getTitle(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, QuestionListActivity.class);
-                intent.putExtra("title", item.getTitle());
 
             }
         });
@@ -61,12 +67,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ImageView image;
         TextView title;
         CardView cardview;
+        TextView time;
+        TextView goal;
+        LinearLayout linearLayout;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);
             title = (TextView) itemView.findViewById(R.id.title);
             cardview = (CardView) itemView.findViewById(R.id.cardView);
+            goal = (TextView) itemView.findViewById(R.id.textView);
+            time = (TextView) itemView.findViewById(R.id.textView2);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.linear);
         }
     }
 }

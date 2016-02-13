@@ -15,29 +15,35 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class GroupListActivity extends AppCompatActivity {
-        private FrameLayout fab;
+    private FrameLayout fab;
 
-        private boolean opacity = false;
+    private boolean opacity = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
-        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+        String strCurDate = CurDateFormat.format(date);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        fab = (FrameLayout)findViewById(R.id.fab);
-        List<Recycler_item> items=new ArrayList<>();
-        Recycler_item[] item=new Recycler_item[5];
-        item[0]=new Recycler_item(R.drawable.btn_delete,"인턴면접");
-        item[1]=new Recycler_item(R.drawable.btn_delete,"동아리면접");
-        item[2]=new Recycler_item(R.drawable.btn_delete,"개인면접");
-        item[3]=new Recycler_item(R.drawable.btn_delete,"유니톤면접");
-        item[4]=new Recycler_item(R.drawable.btn_delete,"공채면접");
+        fab = (FrameLayout) findViewById(R.id.fab);
+        List<Recycler_item> items = new ArrayList<>();
+        Recycler_item[] item = new Recycler_item[20];
+        item[0] = new Recycler_item(R.drawable.btn_delete, "인턴면접","","");
+        item[1] = new Recycler_item(R.drawable.btn_delete, "동아리면접","아자아자화이팅",strCurDate);
+
+        for (int i = 0; i < 20; i++) items.add(item[i]);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,10 +78,10 @@ public class GroupListActivity extends AppCompatActivity {
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if(!s.toString().isEmpty()){
+                        if (!s.toString().isEmpty()) {
                             check.getBackground().setAlpha(200);
                             check.setEnabled(true);
-                        }else{
+                        } else {
                             check.getBackground().setAlpha(51);
                             check.setEnabled(false);
                         }
@@ -85,13 +91,12 @@ public class GroupListActivity extends AppCompatActivity {
                 check.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            dialog.dismiss();
+                        dialog.dismiss();
                     }
                 });
 
             }
         });
-        for(int i=0;i<5;i++) items.add(item[i]);
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
