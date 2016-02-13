@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -48,10 +49,18 @@ public class QuestionListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent2 = new Intent(QuestionListActivity.this, Question_Register.class);
+                startActivity(intent2);
             }
         });
 
+        Button back = (Button) findViewById(R.id.information_btn_toggle122);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 }

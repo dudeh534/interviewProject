@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 /**
@@ -16,6 +17,13 @@ public class Question_Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_register);
         recording=(ImageView)findViewById(R.id.recording);
+        Button button = (Button) findViewById(R.id.information_btn_toggle12);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         recording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
