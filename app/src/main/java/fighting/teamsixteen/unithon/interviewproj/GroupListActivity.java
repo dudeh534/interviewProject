@@ -1,17 +1,27 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupListActivity extends AppCompatActivity {
         private FrameLayout fab;
+
+        private boolean opacity = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +39,62 @@ public class GroupListActivity extends AppCompatActivity {
         item[3]=new Recycler_item(R.drawable.button_floating,"유니톤면접");
         item[4]=new Recycler_item(R.drawable.button_floating,"공채면접");
 
+
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.popup_gonggu_join, null);
+                AlertDialog.Builder buider = new AlertDialog.Builder(GroupListActivity.this); //AlertDialog.Builder 객체 생성
+                buider.setView(dialogView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
+
+                //설정한 값으로 AlertDialog 객체 생성
+                final AlertDialog dialog = buider.create();
+
+                //Dialog의 바깥쪽을 터치했을 때 Dialog를 없앨지 설정
+                dialog.setCanceledOnTouchOutside(false);//없어지지 않도록 설정
+
+                //Dialog 보이기
+                dialog.show();
+                final EditText et = (EditText) dialog.findViewById(R.id.editText);
+                final ImageButton check = (ImageButton) dialog.findViewById(R.id.join_popup_check);
+                check.getBackground().setAlpha(51);
+                check.setEnabled(false);
+                et.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if(!s.toString().isEmpty()){
+                            check.getBackground().setAlpha(200);
+                            check.setEnabled(true);
+                        }
+                    }
+                });
+
+                check.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(et.getText().toString().isEmpty()){
+                            Toast.makeText(GroupListActivity.this, "폴더 제목을 입력해주세요", Toast.LENGTH_SHORT).show();
+                        }else {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+            }
+        });
         for(int i=0;i<5;i++) items.add(item[i]);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
