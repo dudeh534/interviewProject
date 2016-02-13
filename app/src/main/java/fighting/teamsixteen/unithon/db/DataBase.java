@@ -24,7 +24,7 @@ public class DataBase extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create new Database
-        String query = "CREATE TABLE FOLDER(IDX INTEGER PRIMARY KEY, CREDATE DATE DEFAULT CURRENT_TIMESTAMP, GROUPNAME VARCHAR(255) NOT NULL)";
+        String query = "CREATE TABLE FOLDER(IDX INTEGER PRIMARY KEY, CREDATE DATE DEFAULT CURRENT_TIMESTAMP, GROUPNAME VARCHAR(255) NOT NULL, GROUPFIGHTING VARCHAR(255))";
         db.execSQL(query);
         String query2 = "CREATE TABLE QUESTION(IDX INTEGER  PRIMARY KEY, CREDATE DATE DEFAULT CURRENT_TIMESTAMP, GROUPIDX INTEGER NOT NULL, QUESTIONSTR VARCHAR(255), VOICEPATH VARCHAR(255), CHECKPOINT BOOLEAN)";
         db.execSQL(query2);
@@ -52,8 +52,8 @@ public class DataBase extends SQLiteOpenHelper{
 
     }
 
-    public void createNewFolder(String groupName) {
-        String query = "INSERT INTO FOLDER(GROUPNAME) VALUES(\"" + groupName + "\")";
+    public void createNewFolder(String groupName, String fighting) {
+        String query = "INSERT INTO FOLDER(GROUPNAME, GROUPFIGHTING) VALUES(\"" + groupName + "\", \"" + fighting + "\")";
         insert(query);
     }
 
@@ -69,8 +69,9 @@ public class DataBase extends SQLiteOpenHelper{
             int idx = cursor.getInt(0);
             Date date = new Date(cursor.getLong(1));
             String groupname = cursor.getString(2);
+            String groupFighting = cursor.getString(3);
             reGrup[i] = new Group();
-            reGrup[i].setData(idx, groupname, date);
+            reGrup[i].setData(idx, groupname, date, groupFighting);
             i++;
         }
         return  reGrup;

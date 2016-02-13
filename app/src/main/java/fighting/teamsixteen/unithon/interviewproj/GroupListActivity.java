@@ -19,12 +19,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fighting.teamsixteen.unithon.db.DataBase;
+import fighting.teamsixteen.unithon.model.Group;
+
 public class GroupListActivity extends AppCompatActivity {
     private int n = 2;
+    private DataBase db;
+    private Group[] groupList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
+        db = new DataBase(getApplicationContext(), "InterviewDB", null, 1);
+        groupList = db.getGroupList();
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -36,7 +43,11 @@ public class GroupListActivity extends AppCompatActivity {
         final List<Recycler_item> items = new ArrayList<>();
         final Recycler_item[] item = new Recycler_item[20];
         item[0] = new Recycler_item(R.drawable.btn_delete, "인턴면접","","");
-        item[1] = new Recycler_item(R.drawable.btn_delete, "동아리면접",strCurDate,"아자아자화이팅");
+        for(int i = 0 ; i < groupList.length; i++){
+            String creDate = CurDateFormat.format(groupList[i].getCredate());
+            item[i+1] = new Recycler_item(R.drawable.btn_delete, groupList[i].getGroupName(),creDate,groupList[i].getGroupFighting());
+
+        }
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -87,6 +98,7 @@ public class GroupListActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             dialog.dismiss();
                             item[n] = new Recycler_item(R.drawable.btn_delete, et.getText().toString(), strCurDate, et1.getText().toString());
+                            db.createNewFolder(et.getText().toString(), et1.getText().toString());
                             n += 1;
                             for (int i = n-1; i < n; i++) items.add(item[i]);
                             recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
@@ -96,6 +108,7 @@ public class GroupListActivity extends AppCompatActivity {
 
                 }else {
                     Intent intent = new Intent(GroupListActivity.this, QuestionListActivity.class);
+                    intent.putExtra("GroupIdx",groupList[position-1].getIdx());
                     startActivity(intent);
                 }
             }
@@ -107,7 +120,7 @@ public class GroupListActivity extends AppCompatActivity {
         }));
 
 
-        for (int i = 0; i < n; i++) items.add(item[i]);
+        for (int i = 0; i < groupList.length+1; i++) items.add(item[i]);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(new RecyclerAdapter(getApplicationContext(), items, R.layout.activity_main));
 

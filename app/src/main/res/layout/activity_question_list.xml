@@ -60,5 +60,15 @@
         android:id = "@+id/recyclerView2"
         android:layout_below="@+id/linearLayout2"
         />
+    <FrameLayout
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/questionlist_upload"
+        android:id="@+id/fab"
+        android:onClick="onClick"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
 
 </RelativeLayout>
