@@ -13,6 +13,7 @@ public class Question {
     private String question;
     private String voicePath;
     private boolean checkPoint;
+    private int answerCount;
 
 
     public int getIdx(){ return idx; }
@@ -21,6 +22,7 @@ public class Question {
     public String getQuestion() { return question; }
     public String getVoicePath(){ return voicePath;}
     public boolean getCheckPoint() { return checkPoint;}
+    public int getAnswerCount(){return answerCount;}
 
     private void setIdx(int idx){ this.idx = idx;}
     private void setCreDate(Date creDate){this.creDate = creDate;}
@@ -28,6 +30,7 @@ public class Question {
     private void setQuestion(String question) { this.question = question;}
     private void setVoicePath(String voicePath) { this.voicePath = voicePath;}
     private void setCheckPoint(boolean checkPoint) { this.checkPoint = checkPoint;}
+    public void setAnswerCount(int answerCount){this.answerCount = answerCount;}
 
     public void setData(int idx,Date creDate, int groupIdx, String question, String voicePath){
         setIdx(idx);
