@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Defines the custom XML attributes supported for a HorizontalListView -->
+    5     <declare-styleable name="HorizontalListView">
+    6         <attr name="dividerWidth" format="dimension" />
+    7         <attr name="android:divider" />
+    8         <attr name="android:requiresFadingEdge" />
+    9         <attr name="android:fadingEdgeLength" />
+    10     </declare-styleable>
+
+</resources>

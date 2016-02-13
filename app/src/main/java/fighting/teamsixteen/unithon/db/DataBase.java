@@ -86,7 +86,7 @@ public class DataBase extends SQLiteOpenHelper{
     public Question[] getQuestionList(int groupIdx){
         Question[] reQ = null;
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM QUESTION WHERE GROUPIDX= " + groupIdx + " ORDER BY CREDATE DESC";
+        String query = "SELECT *, (SELECT COUNT(*) FROM ANSWER WHERE ANSWER.QUESTIONIDX = QUESTION.IDX) AS CNT FROM QUESTION WHERE GROUPIDX= " + groupIdx + " ORDER BY CREDATE DESC";
         Cursor cursor = db.rawQuery(query,null);
         reQ = new Question[cursor.getColumnCount()];
         int i = 0;
@@ -96,8 +96,10 @@ public class DataBase extends SQLiteOpenHelper{
             int groupidx = cursor.getInt(2);
             String question = cursor.getString(3);
             String voicePath = cursor.getString(4);
+            int answerCnt = cursor.getInt(5);
             reQ[i] = new Question();
             reQ[i].setData(idx, creDate, groupidx,question,voicePath);
+            reQ[i].setAnswerCount(answerCnt);
             i++;
         }
         return reQ;
