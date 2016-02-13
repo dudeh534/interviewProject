@@ -39,7 +39,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout"
@@ -50,8 +50,10 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="총 4개의 질문이 있습니다" />
+            android:text="총 4개의 질문이 있습니다"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -61,14 +63,14 @@
         android:layout_below="@+id/linearLayout2"
         />
     <FrameLayout
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:background="@drawable/questionlist_upload"
-        android:id="@+id/fab"
+        android:id="@+id/fab1"
         android:onClick="onClick"
         android:layout_alignWithParentIfMissing="false"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="20dp" />
 
 </RelativeLayout>
