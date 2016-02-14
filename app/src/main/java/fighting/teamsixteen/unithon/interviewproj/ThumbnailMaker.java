@@ -26,37 +26,42 @@ public class ThumbnailMaker {
     int Index[];
     int size;
 
-    void UpdatedThumbnail(Context mContext,int group_id) {
+    void UpdatedThumbnail(Context mContext, int group_id) {
         //  Path=getPath();
 
         DataBase db = new DataBase(mContext, "InterviewDB", null, 1);
-        Question[] questions=db.getQuestionList(group_id);
+        Question[] questions = db.getQuestionList(group_id);
         size = questions.length;
-        Path=new String[size];
+        Path = new String[size];
 
         Thumbnail = new Bitmap[size];
         Time = new String[size];
         Star = new Boolean[size];
-        Index= new int[size];
-        for(int i=0;i<size;i++) {
-            Path[i] = questions[i].getVoicePath();
-            Thumbnail[i] = ThumbnailUtils.createVideoThumbnail(Path[i], MediaStore.Video.Thumbnails.MINI_KIND);
-            Star[i]=questions[i].getCheckPoint();
-            Index[i]=questions[i].getIdx();
+        Index = new int[size];
+        for (int i = 0; i < size; i++) {
+            if (questions[i] != null) {
+
+                Path[i] = questions[i].getVoicePath();
+                Thumbnail[i] = ThumbnailUtils.createVideoThumbnail(Path[i], MediaStore.Video.Thumbnails.MINI_KIND);
+                Star[i] = questions[i].getCheckPoint();
+                Index[i] = questions[i].getIdx();
+            }
         }
 
     }
 
-    public ListAdapter getVideoAdapter(Context context){
-        MyArrayAdapter myArrayAdapter=new MyArrayAdapter(context);
+    public ListAdapter getVideoAdapter(Context context) {
+        MyArrayAdapter myArrayAdapter = new MyArrayAdapter(context);
         return myArrayAdapter;
     }
+
     class MyArrayAdapter extends ArrayAdapter {
         Context context;
 
         MyArrayAdapter(Context context) {
-            super(context, R.layout.thumbnail, Path);
+//            super(context, R.layout.thumbnail, Path);
 
+            super(context, R.layout.thumbnail, R.id.thumbnail_time);
             // instance 변수(this.context)를 생성자 호출시 전달받은 지역 변수(context)로 초기화.
             this.context = context;
         }

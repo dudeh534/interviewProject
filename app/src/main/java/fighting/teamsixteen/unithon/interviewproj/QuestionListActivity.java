@@ -22,6 +22,7 @@ public class QuestionListActivity extends AppCompatActivity {
     private int nowQuestionIdx;         // save now question idx
     private Question[] questions;
     private DataBase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +57,10 @@ public class QuestionListActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Intent i=new Intent(QuestionListActivity.this,Vid)
-//                questions[position].getIdx()
+                Intent i=new Intent(QuestionListActivity.this,VideoMakeActivity.class);
+                i.putExtra("Question_idx",questions[position].getIdx());
+                i.putExtra("Group_idx",nowQuestionIdx);
+                startActivity(i);
             }
 
             @Override

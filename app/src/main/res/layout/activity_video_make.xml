@@ -35,7 +35,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/ic_launcher" />
+                android:padding="12dp"
+                android:src="@drawable/btn_front_back_camera" />
             <ImageView
                 android:id="@+id/record_btn"
                 android:layout_width="50dp"
