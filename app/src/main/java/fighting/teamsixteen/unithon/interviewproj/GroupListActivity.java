@@ -1,8 +1,12 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +35,10 @@ public class GroupListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
+
+        askPermission();
+
+
         db = new DataBase(getApplicationContext(), "InterviewDB", null, 1);
         groupList = db.getGroupList();
         long now = System.currentTimeMillis();
@@ -128,5 +137,28 @@ public class GroupListActivity extends AppCompatActivity {
         recyclerView.setAdapter(new RecyclerAdapter(getApplicationContext(), items, R.layout.activity_main));
 
     }
+    public void askPermission() {
+        // before start application check permission
+        ArrayList<String> permissions = new ArrayList<String>();
+        int ck = 0;
+        if((ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)) {
+            // if explanation needed we can request the permission
+            permissions.add(android.Manifest.permission.CAMERA);
+        }
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            // if explanation needed we can request the permission
+            permissions.add(android.Manifest.permission.RECORD_AUDIO);
 
+        }
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // if explanation needed we can request the permission
+            permissions.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        }
+        String[] needPermissions = new String[permissions.size()];
+        for(int i = 0 ; i < permissions.size(); i++) {
+            needPermissions[i] = permissions.get(i);
+        }
+        ActivityCompat.requestPermissions(this, needPermissions, 0) ;         // 0 is request code
+    }
 }

@@ -1,15 +1,18 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -43,77 +46,85 @@ public class RecordActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
-        CancelButton=(ImageButton)findViewById(R.id.CancelBtn);
-        CircleBtn=(ImageButton)findViewById(R.id.CircleBtn);
-        RestartBtn=(ImageButton)findViewById(R.id.restartBtn);
-        FinishBtn=(ImageButton)findViewById(R.id.FinishBtn);
-
-
+        CancelButton = (ImageButton) findViewById(R.id.CancelBtn);
         CancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(), "Record Audio permission is not granted", Toast.LENGTH_SHORT).show();
 
 
-        CircleBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (recordState) {
-                    case STATE_NONE:
-                        recordState=STATE_RECORDING;
-                        Toast.makeText(getApplicationContext(),"녹음이 시작되었습니다.",Toast.LENGTH_LONG);
-                        CircleBtn.setBackgroundResource(R.drawable.question_record_pause);
-                        try {
-                            startRecording();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case STATE_RECORDING:
-                        recordState=STATE_RECORED;
-                        CircleBtn.setBackgroundResource(R.drawable.question_record_play);
-                        Toast.makeText(getApplicationContext(),"녹음이 중지되었습니다.",Toast.LENGTH_SHORT);
-                        stopRecording();
-                        break;
-                    case STATE_RECORED:
-                        CircleBtn.setBackgroundResource(R.drawable.question_record_pause);
-                        Toast.makeText(getApplicationContext(),"녹음이 재생되었습니다.",Toast.LENGTH_SHORT);
-                        recordState=STATE_PLAYING;
-                        playRecording();
-                        break;
-                    case STATE_PLAYING:
-                        Toast.makeText(getApplicationContext(), "녹음파일의 재생이 중지되었습니다.", Toast.LENGTH_SHORT);
-                        CircleBtn.setBackgroundResource(R.drawable.question_record_play);
-                        recordState=STATE_RECORED;
-                        break;
+        }else {
+            CircleBtn = (ImageButton) findViewById(R.id.CircleBtn);
+            RestartBtn = (ImageButton) findViewById(R.id.restartBtn);
+            FinishBtn = (ImageButton) findViewById(R.id.FinishBtn);
+
+
+
+
+
+            CircleBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (recordState) {
+                        case STATE_NONE:
+                            recordState = STATE_RECORDING;
+                            Toast.makeText(getApplicationContext(), "녹음이 시작되었습니다.", Toast.LENGTH_LONG);
+                            CircleBtn.setBackgroundResource(R.drawable.question_record_pause);
+                            try {
+                                startRecording();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case STATE_RECORDING:
+                            recordState = STATE_RECORED;
+                            CircleBtn.setBackgroundResource(R.drawable.question_record_play);
+                            Toast.makeText(getApplicationContext(), "녹음이 중지되었습니다.", Toast.LENGTH_SHORT);
+                            stopRecording();
+                            break;
+                        case STATE_RECORED:
+                            CircleBtn.setBackgroundResource(R.drawable.question_record_pause);
+                            Toast.makeText(getApplicationContext(), "녹음이 재생되었습니다.", Toast.LENGTH_SHORT);
+                            recordState = STATE_PLAYING;
+                            playRecording();
+                            break;
+                        case STATE_PLAYING:
+                            Toast.makeText(getApplicationContext(), "녹음파일의 재생이 중지되었습니다.", Toast.LENGTH_SHORT);
+                            CircleBtn.setBackgroundResource(R.drawable.question_record_play);
+                            recordState = STATE_RECORED;
+                            break;
+                    }
                 }
-            };
-        });
-        RestartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(recordState!=STATE_RECORDING)
-                {
-                    Toast.makeText(getApplicationContext(),"녹음파일이 초기화되었습니다",Toast.LENGTH_SHORT);
-                    CircleBtn.setBackgroundResource(R.drawable.question_record_start);
-                    recordState=STATE_NONE;
-                    audiofile=null;
-                }
-            }
-        });
-        FinishBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                    Toast.makeText(getApplicationContext(),"녹음이 저장되었습니다.",Toast.LENGTH_SHORT);
-                    if(audiofile!=null)
-                      processaudiofile();
+                ;
+            });
+            RestartBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recordState != STATE_RECORDING) {
+                        Toast.makeText(getApplicationContext(), "녹음파일이 초기화되었습니다", Toast.LENGTH_SHORT);
+                        CircleBtn.setBackgroundResource(R.drawable.question_record_start);
+                        recordState = STATE_NONE;
+                        audiofile = null;
+                    }
+                }
+            });
+            FinishBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Toast.makeText(getApplicationContext(), "녹음이 저장되었습니다.", Toast.LENGTH_SHORT);
+                    if (audiofile != null)
+                        processaudiofile();
                     finish();
 
-            }
-        });
+                }
+            });
+        }
     }
 
     protected void startRecording() throws IOException

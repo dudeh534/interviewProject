@@ -1,9 +1,13 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.jar.Manifest;
 
 import fighting.teamsixteen.unithon.db.DataBase;
 import fighting.teamsixteen.unithon.util.HorizontalListView;
@@ -29,6 +34,10 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
     private static final int STATE_RECORDING=1;
     private static final int CAMERA_BACK = 0 ;
     private static final int CAMERA_FRONT = 1;
+
+
+
+
     int currentState=STATE_NOT_RECORD;
     Camera camera;
     int currentCameraId = 1;
@@ -61,78 +70,90 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_make);
 
-        question_idx = getIntent().getIntExtra("Question_idx", 0);
-        group_idx = getIntent().getIntExtra("Group_idx", 0);
 
-        videoview_horizontallist = (HorizontalListView) findViewById(R.id.videoview_horizontallist);
-        ThumbnailMaker thumbnailMaker = new ThumbnailMaker();
-        thumbnailMaker.UpdatedThumbnail(VideoMakeActivity.this, group_idx);
-        videoview_horizontallist.setAdapter(thumbnailMaker.getVideoAdapter(VideoMakeActivity.this));
 
-        mTexture = (TextureView) findViewById(R.id.textureView1);
-        mTexture.setSurfaceTextureListener(this);
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(), "Camera permission is not granted", Toast.LENGTH_SHORT).show();
 
-        final ImageView frontback = (ImageView) findViewById(R.id.frontback);
-        frontback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeCamera();
-            }
-        });
-        final ImageView record_btn = (ImageView) findViewById(R.id.record_btn);
-        record_btn.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                if (!isrecording) {
-                    if (currentState == STATE_NOT_RECORD) {
-                        currentState = STATE_RECORDING;
-                        Log.e("CAM TEST", "REC START!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }else if(ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(), "WRITE_EXTERNAL_STORAGE permission is not granted", Toast.LENGTH_SHORT).show();
+        } else {
+            question_idx = getIntent().getIntExtra("Question_idx", 0);
+            group_idx = getIntent().getIntExtra("Group_idx", 0);
 
-                        if (mTexture == null) {
-                            Log.e("CAM TEST", "View Err!!!!!!!!!!!!!!!");
-                        }
-                        isrecording = true;
-                        recordname = "/SI" + System.currentTimeMillis() + ".mp4";
+            videoview_horizontallist = (HorizontalListView) findViewById(R.id.videoview_horizontallist);
+            ThumbnailMaker thumbnailMaker = new ThumbnailMaker();
+            thumbnailMaker.UpdatedThumbnail(VideoMakeActivity.this, group_idx);
+            videoview_horizontallist.setAdapter(thumbnailMaker.getVideoAdapter(VideoMakeActivity.this));
 
-                        beginRecording(mTexture);
-                        Log.d("Name",recordname);
-                        record_btn.setBackgroundResource(R.drawable.question_record_ing);
-                    }
-                } else {
-
-                    isrecording = false;
-                            // 레코더 객체가 존재할 경우 이를 스톱시킨다
-                            if (currentState == STATE_RECORDING) {
-
-                                currentState = STATE_NOT_RECORD;
-                                if (recorder != null) {
-                                    Log.e("CAM TEST", "CAMERA STOP!!!!!");
-                                    recorder.release();
-                                    //                       recorder.stop();
-                                    recorder = null;
-                                }
-                                // 프리뷰가 없을 경우 다시 가동 시킨다
-                                if (mCamera != null) {
-                                    Log.e("CAM TEST", "Preview Restart!!!!!");
-                                    // 프리뷰 다시 설정{
-                                    mCamera.stopPreview();
-                                    mCamera.release();
-                                    mCamera = null;
-                                    setCameraPreview(mTexture, currentCameraId);
-                        }
-                    }
-                    record_btn.setBackgroundResource(R.drawable.question_record_start);
-                    DataBase db = new DataBase(getApplicationContext(), "InterviewDB", null, 1);
-                    db.createNewAnswerVideo(question_idx, OUTPUT_FILE + recordname, 0, "");
+            mTexture = (TextureView) findViewById(R.id.textureView1);
+            mTexture.setSurfaceTextureListener(this);
+            final ImageView frontback = (ImageView) findViewById(R.id.frontback);
+            frontback.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    changeCamera();
                 }
-            }
-        });
+            });
+            final ImageView record_btn = (ImageView) findViewById(R.id.record_btn);
+            record_btn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    if (!isrecording) {
+                        if (currentState == STATE_NOT_RECORD) {
+                            currentState = STATE_RECORDING;
+                            Log.e("CAM TEST", "REC START!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                            if (mTexture == null) {
+                                Log.e("CAM TEST", "View Err!!!!!!!!!!!!!!!");
+                            }
+                            isrecording = true;
+                            recordname = "/SI" + System.currentTimeMillis() + ".mp4";
+
+                            beginRecording(mTexture);
+                            Log.d("Name", recordname);
+                            record_btn.setBackgroundResource(R.drawable.question_record_ing);
+                        }
+                    } else {
+
+                        isrecording = false;
+                        // 레코더 객체가 존재할 경우 이를 스톱시킨다
+                        if (currentState == STATE_RECORDING) {
+
+                            currentState = STATE_NOT_RECORD;
+                            if (recorder != null) {
+                                Log.e("CAM TEST", "CAMERA STOP!!!!!");
+                                recorder.release();
+                                //                       recorder.stop();
+                                recorder = null;
+                            }
+                            // 프리뷰가 없을 경우 다시 가동 시킨다
+                            if (mCamera != null) {
+                                Log.e("CAM TEST", "Preview Restart!!!!!");
+                                // 프리뷰 다시 설정{
+                                mCamera.stopPreview();
+                                mCamera.release();
+                                mCamera = null;
+                                setCameraPreview(mTexture, currentCameraId);
+                            }
+                        }
+                        record_btn.setBackgroundResource(R.drawable.question_record_start);
+                        DataBase db = new DataBase(getApplicationContext(), "InterviewDB", null, 1);
+                        db.createNewAnswerVideo(question_idx, OUTPUT_FILE + recordname, 0, "");
+                    }
+                }
+            });
+        }
+
+
 
     }
 
     private void startCamera(int facing) {
+
         Log.e("STARTRTRR",String.valueOf(facing));
         try
         {
@@ -153,7 +174,6 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
         finally {
             closeCamera();
         }
-//        mCamera = Camera.open(facing);
 
     }
 
@@ -383,7 +403,6 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
                 degrees = 180;
                 break;
         }
-        int result = (90 - degrees + 360) % 360;
         return degrees;
     }
 }
