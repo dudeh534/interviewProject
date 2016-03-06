@@ -12,6 +12,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +27,8 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
     private static final int RECORDING_TIME = 120000;
     private static final int STATE_NOT_RECORD=0;
     private static final int STATE_RECORDING=1;
+    private static final int CAMERA_BACK = 0 ;
+    private static final int CAMERA_FRONT = 1;
     int currentState=STATE_NOT_RECORD;
     Camera camera;
     int currentCameraId = 1;
@@ -68,23 +71,12 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
 
         mTexture = (TextureView) findViewById(R.id.textureView1);
         mTexture.setSurfaceTextureListener(this);
-//        setContentView(mTexture);
-//        cameraLayout = (RelativeLayout) findViewById(R.id.cameraLayout);
-////        cameraLayout.addView(mTexture);
 
         final ImageView frontback = (ImageView) findViewById(R.id.frontback);
         frontback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeCamera();
-//                if (currentCameraId == 0)
-//                    currentCameraId = 1;
-//                else if (currentCameraId == 1)
-//                    currentCameraId = 0;
-//                Log.e("currentCameraId", currentCameraId + "");
-//                mCamera.stopPreview();
-//                mCamera.release();
-//                setCameraPreview(mTexture, currentCameraId);
             }
         });
         final ImageView record_btn = (ImageView) findViewById(R.id.record_btn);
@@ -129,11 +121,8 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
                                     mCamera.release();
                                     mCamera = null;
                                     setCameraPreview(mTexture, currentCameraId);
-                                    // 프리뷰 재시작
-//                    mCamera.startPreview();
                         }
                     }
-//                    mCamera.startPreview();
                     record_btn.setBackgroundResource(R.drawable.question_record_start);
                     DataBase db = new DataBase(getApplicationContext(), "InterviewDB", null, 1);
                     db.createNewAnswerVideo(question_idx, OUTPUT_FILE + recordname, 0, "");
@@ -148,48 +137,24 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
         try
         {
             mCamera = Camera.open(facing);
+            Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
+
+            mTexture.setLayoutParams(new FrameLayout.LayoutParams(
+                    previewSize.width, previewSize.height, Gravity.CENTER));
+            mCamera.setPreviewTexture(mTexture.getSurfaceTexture());
+            mCamera.startPreview();
         }
         catch(RuntimeException e)
         {
             Log.d("TAG",e.toString());
+        }catch (IOException e){
+            Log.d("TAG",e.toString());
         }
         finally {
-            if(mCamera!=null) {
-
-                Log.d("TAG","mCamera not null");
-                mCamera.release();
-            }
-            if(camera!=null) {
-                Log.d("TAG","camera not null");
-                camera.release();
-            }
+            closeCamera();
         }
-        mCamera = Camera.open(facing);
-        Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
+//        mCamera = Camera.open(facing);
 
-        mTexture.setLayoutParams(new FrameLayout.LayoutParams(
-                previewSize.width, previewSize.height, Gravity.CENTER));
-
-        try {
-            mCamera.setPreviewTexture(mTexture.getSurfaceTexture());
-        } catch (IOException t) {
-        }
-        mCamera.startPreview();
-//        mTexture.setAlpha(1.0f);
-//        mTexture.setRotation(getCameraDegress());//90.0f);//
-        //////////////////////
-//        mCamera = openCamera(facing);
-////        if (mCamera == null) {
-////            mCamera = Camera.open();
-////            currentCameraId = 0;
-////        }
-//        try {
-//            mCamera.setPreviewTexture();
-//        } catch (IOException e){
-//            mCamera.release();
-//            mCamera = null;
-//            e.printStackTrace();
-//        }
     }
 
     private void closeCamera() {
@@ -204,11 +169,11 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
     public void changeCamera() {
         closeCamera();
 
-        if (currentCameraId == 0) {
-            currentCameraId = 1;
+        if (currentCameraId == CAMERA_BACK) {
+            currentCameraId = CAMERA_FRONT;
             startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
         } else {
-            currentCameraId = 0;
+            currentCameraId = CAMERA_FRONT;
             startCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
         }
     }
@@ -218,7 +183,7 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
     public void onSurfaceTextureAvailable(SurfaceTexture arg0, int arg1, int arg2) {
         closeCamera();
         startCamera(currentCameraId);
-        setCameraPreview(mTexture,currentCameraId);
+        setCameraPreview(mTexture, currentCameraId);
         Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
 
         mTexture.setLayoutParams(new FrameLayout.LayoutParams(
@@ -226,11 +191,11 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
 
         try {
             mCamera.setPreviewTexture(arg0);
+            mCamera.startPreview();
+            mTexture.setAlpha(1.0f);
+            mTexture.setRotation(getCameraDegress());//90.0f);//
         } catch (IOException t) {
         }
-        mCamera.startPreview();
-        mTexture.setAlpha(1.0f);
-        mTexture.setRotation(getCameraDegress());//90.0f);//
     }
 
     @Override
@@ -287,17 +252,6 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
         if (!state.equals(android.os.Environment.MEDIA_MOUNTED)) {
             Log.e("CAM TEST", "I/O Exception");
         }
-        // 파일 생성/초기화
-//        String str = Environment.getExternalStorageState();
-//        if ( str.equals(Environment.MEDIA_MOUNTED)) {
-//
-//            String dirPath = "/sdcard/android/data/pe.berabue.sdtest/temp";
-//            File file = new File(dirPath);
-//            if( !file.exists() )  // 원하는 경로에 폴더가 있는지 확인
-//                file.mkdirs();
-//        }
-//        else
-//            Toast.makeText(VideoMakeActivity.this, "SD Card 인식 실패", Toast.LENGTH_SHORT).show();
 
         Log.e("CAM TEST", "#2 Create File!!!");
         File outFile = new File(OUTPUT_FILE + recordname);
@@ -327,12 +281,12 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
                 recorder.setVideoSize(640, 480);
                 recorder.setVideoFrameRate(15);
                 recorder.setVideoEncodingBitRate(3 * 1000 * 1000);
-                recorder.setOrientationHint(getCameraDegress());//90);
+              //  recorder.setOrientationHint(getCameraDegress());//90);
             } else {
                 recorder.setVideoSize(320, 240);//640, 480);
                 recorder.setVideoFrameRate(5);
                 recorder.setVideoEncodingBitRate(1 * 1000 * 1000);
-                recorder.setOrientationHint(getCameraDegress() + 180);//90);
+             //   recorder.setOrientationHint((getCameraDegress() + 180)%360);//90);
             }
             // Video/Audio 인코더 설정
             recorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
@@ -417,19 +371,19 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
         int degrees = 0;
         switch (rotation) {
             case Surface.ROTATION_0:
-                degrees = 0;
-                break;
-            case Surface.ROTATION_90:
                 degrees = 90;
                 break;
+            case Surface.ROTATION_90:
+                degrees = 0;
+                break;
             case Surface.ROTATION_180:
-                degrees = 180;
+                degrees = 270;
                 break;
             case Surface.ROTATION_270:
-                degrees = 270;
+                degrees = 180;
                 break;
         }
         int result = (90 - degrees + 360) % 360;
-        return result;
+        return degrees;
     }
 }
