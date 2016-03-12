@@ -1,6 +1,7 @@
 package fighting.teamsixteen.unithon.interviewproj;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -14,6 +15,7 @@ import android.view.Gravity;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -70,7 +72,15 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_make);
 
-
+        Button tempButton = (Button)findViewById(R.id.testnextdaun);
+        tempButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(VideoMakeActivity.this, "asdfadf", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(VideoMakeActivity.this, VideoViewActivity.class);
+                startActivity(intent);
+            }
+        });
 
         if(ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getApplicationContext(), "Camera permission is not granted", Toast.LENGTH_SHORT).show();
@@ -125,6 +135,7 @@ public class VideoMakeActivity extends AppCompatActivity implements TextureView.
 
                             currentState = STATE_NOT_RECORD;
                             if (recorder != null) {
+                                // TODO!!
                                 Log.e("CAM TEST", "CAMERA STOP!!!!!");
                                 recorder.release();
                                 //                       recorder.stop();

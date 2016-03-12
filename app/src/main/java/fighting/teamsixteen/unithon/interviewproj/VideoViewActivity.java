@@ -13,6 +13,8 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import fighting.teamsixteen.unithon.db.DataBase;
+import fighting.teamsixteen.unithon.model.AnswerVideo;
 import fighting.teamsixteen.unithon.util.HorizontalListView;
 
 public class VideoViewActivity extends AppCompatActivity {
@@ -49,7 +51,10 @@ HorizontalListView videoview_horizontallist;
         });
 
         //videoview.setVideoPath();
-        String PATH = "mnt/sdcard/videooutput.mp4";
+       // String PATH = "mnt/sdcard/videooutput.mp4";
+        DataBase db = new DataBase(getApplicationContext(), "InterviewDB", null, 1);
+        AnswerVideo[] answers = db.getAnswerVideo(1);
+        String PATH = "mnt/" + answers[0].getFilePath();
         videoview.setVideoPath(PATH);
 //        videoview.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.aaaa));
 
@@ -60,7 +65,7 @@ HorizontalListView videoview_horizontallist;
             @Override
             public void onPrepared(MediaPlayer mp) {
                 videoview.start();
-                testTv.setText("\n비디오 총시간 : " + videoview.getDuration() / 1000);//비디오 총시간?
+             //   testTv.setText("\n비디오 총시간 : " + videoview.getDuration() / 1000);//비디오 총시간?
             }
         });
     }

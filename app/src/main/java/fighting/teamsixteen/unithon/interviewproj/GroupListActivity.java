@@ -155,10 +155,12 @@ public class GroupListActivity extends AppCompatActivity {
             permissions.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         }
-        String[] needPermissions = new String[permissions.size()];
-        for(int i = 0 ; i < permissions.size(); i++) {
-            needPermissions[i] = permissions.get(i);
+        if(permissions.size() > 0) {
+            String[] needPermissions = new String[permissions.size()];
+            for (int i = 0; i < permissions.size(); i++) {
+                needPermissions[i] = permissions.get(i);
+            }
+            ActivityCompat.requestPermissions(this, needPermissions, 0);         // 0 is request code
         }
-        ActivityCompat.requestPermissions(this, needPermissions, 0) ;         // 0 is request code
     }
 }

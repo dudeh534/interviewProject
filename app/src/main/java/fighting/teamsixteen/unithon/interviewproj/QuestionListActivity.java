@@ -39,9 +39,9 @@ public class QuestionListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         final List<Recycler_Item_question> items = new ArrayList<>();
         final Recycler_Item_question[] item = new Recycler_Item_question[20];
-        if(questions[0] != null) {
+        if(questions != null) {
             int arrSize = 0;
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < questions.length; i++) {
                 if(questions[i] == null){
                     break;
                 }else {

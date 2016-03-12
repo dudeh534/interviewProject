@@ -7,44 +7,53 @@ import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import fighting.teamsixteen.unithon.db.DataBase;
+import fighting.teamsixteen.unithon.model.AnswerVideo;
 import fighting.teamsixteen.unithon.model.Question;
 
 /**
  * Created by Kim GyuHwan on 2016-02-13.
  */
 public class ThumbnailMaker {
-    String Path[];
+    //String Path[];
     Bitmap Thumbnail[];
-    String Time[];
+   // String Time[];
     Boolean Star[];
     int Index[];
     int size;
+    AnswerVideo[] answers;
 
+    private ArrayList<AnswerVideo> answersList;
     void UpdatedThumbnail(Context mContext, int group_id) {
         //  Path=getPath();
 
         DataBase db = new DataBase(mContext, "InterviewDB", null, 1);
-        Question[] questions = db.getQuestionList(group_id);
-        size = questions.length;
-        Path = new String[size];
+        answers = db.getAnswerVideo(group_id);
+        size = answers.length;
+     //   Path = new String[size];
 
         Thumbnail = new Bitmap[size];
-        Time = new String[size];
+     //   Time = new String[size];
         Star = new Boolean[size];
         Index = new int[size];
         for (int i = 0; i < size; i++) {
-            if (questions[i] != null) {
 
-                Path[i] = questions[i].getVoicePath();
-                Thumbnail[i] = ThumbnailUtils.createVideoThumbnail(Path[i], MediaStore.Video.Thumbnails.MINI_KIND);
-                Star[i] = questions[i].getCheckPoint();
-                Index[i] = questions[i].getIdx();
+            if (answers[i] != null) {
+
+        //        Path[i] = answers[i].getFilePath();
+                Thumbnail[i] = ThumbnailUtils.createVideoThumbnail(answers[i].getFilePath(), MediaStore.Video.Thumbnails.MINI_KIND);
+                //Star[i] = answers[i].getCredit();
+                Star[i] = true;
+                Index[i] = answers[i].getIdx();
             }
         }
 
@@ -61,9 +70,11 @@ public class ThumbnailMaker {
         MyArrayAdapter(Context context) {
 //            super(context, R.layout.thumbnail, Path);
 
-            super(context, R.layout.thumbnail, R.id.thumbnail_time);
+            super(context, R.layout.thumbnail, R.id.thumnail_nothing);
             // instance 변수(this.context)를 생성자 호출시 전달받은 지역 변수(context)로 초기화.
             this.context = context;
+
+            fillAdapter();
         }
 
         View makethumb(int idx) {
@@ -79,11 +90,11 @@ public class ThumbnailMaker {
                 Thumbnail_star.setImageResource(R.drawable.question_record_start);
 
             }
-            Thumbnail_time.setText(Time[idx]);
+            Thumbnail_time.setText(answers[idx].getCurrentDate());
             ret.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Toast.makeText(context, "Button Clicked", Toast.LENGTH_SHORT).show();
 //Index[idx] 이게 클릭된 영상의 idx
                 }
             });

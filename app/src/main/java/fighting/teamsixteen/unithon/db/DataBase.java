@@ -97,8 +97,8 @@ public class DataBase extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT *, (SELECT COUNT(*) FROM ANSWER WHERE ANSWER.QUESTIONIDX = QUESTION.IDX) AS CNT FROM QUESTION WHERE GROUPIDX= " + groupIdx + " ORDER BY CREDATE DESC";
         Cursor cursor = db.rawQuery(query,null);
-        reQ = new Question[cursor.getColumnCount()];
-        if(cursor.getColumnCount() == 0){
+        reQ = new Question[cursor.getCount()];
+        if(cursor.getCount() == 0){
             return null;
         }
         int i = 0;
@@ -131,7 +131,7 @@ public class DataBase extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM ANSWER WHERE QUESTIONIDX= " + questionIdx + " ORDER BY CREDATE DESC";
         Cursor cursor = db.rawQuery(query,null);
-        reAnswer = new AnswerVideo[cursor.getColumnCount()];
+        reAnswer = new AnswerVideo[cursor.getCount()];
         int i = 0;
         while(cursor.moveToNext()){
             int idx = cursor.getInt(0);
@@ -162,7 +162,7 @@ public class DataBase extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM MEMO WHERE ANSWERIDX= " + answerIdx + " ORDER BY CREDATE DESC";
         Cursor cursor = db.rawQuery(query,null);
-        reMemo = new Memo[cursor.getColumnCount()];
+        reMemo = new Memo[cursor.getCount()];
         int i = 0;
         while(cursor.moveToNext()){
             int idx = cursor.getInt(0);
